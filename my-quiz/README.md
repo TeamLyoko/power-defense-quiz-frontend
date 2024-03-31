@@ -12,3 +12,7 @@ Currently, two official plugins are available:
 # How to Start
 
 Clone the repository. Open with VS code and then run the command "npm run dev" in a new terminal. 
+
+# How to create build files
+
+Run the command "npm run build"
