@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { resultInitialState } from './constants';
+import { resultInitialState } from '../../constants';
+import AnswerTimer from '../AnswerTimer/AnswerTimer';
+import "./Quiz.scss";
 
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -7,6 +9,7 @@ const Quiz = ({ questions }) => {
     const [isCorrect, setIsCorrect] = useState(null);
     const [results, setResults] = useState(resultInitialState);
     const [showResults, setShowResults] = useState(false);
+    const [showAnswerTimer, setShowAnswerTimer] = useState(true);
     
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
@@ -21,9 +24,10 @@ const Quiz = ({ questions }) => {
         }
     };
 
-    const onClickNext = () => {
+    const onClickNext = (isAnswerRight) => {
         setAnswerIdx(null);
-        setResults((prev) => isCorrect ?
+        setShowAnswerTimer(false);
+        setResults((prev) => isAnswerRight ?
             { ...prev, score: prev.score + 5, correctAnswers: prev.correctAnswers + 1 } :
             { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
         );
@@ -36,6 +40,11 @@ const Quiz = ({ questions }) => {
             setShowResults(true);
             console.log("Quiz finished");
         }
+
+        setTimeout(() => {
+            setShowAnswerTimer(true);
+        
+        })
     };
 
     const onTryAgain = () => {
@@ -43,11 +52,19 @@ const Quiz = ({ questions }) => {
         setShowResults(false);
     };
 
+    const handleTimeUp = () => {
+        //alert("Time's up!");
+        setIsCorrect(false);
+        onClickNext(false);
+    }
 
     return (
         <div className="quiz-container">
             { !showResults ? (
                 <>
+                {showAnswerTimer && (
+                    <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
+                )}
                 <span className="active-question-no">{currentQuestion + 1}</span>
                 <span className="total-question">/{questions.length}</span>
                 <h2>{question}</h2>
@@ -62,7 +79,7 @@ const Quiz = ({ questions }) => {
                     ))}
                 </ul>
                 <div className="footer">
-                    <button onClick={onClickNext} disabled={answerIdx === null}>
+                    <button onClick={() => onClickNext(isCorrect)} disabled={answerIdx === null}>
                         {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
                     </button>
                 </div>
