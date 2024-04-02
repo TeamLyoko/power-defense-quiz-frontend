@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { resultInitialState } from '../../constants';
 import AnswerTimer from '../AnswerTimer/AnswerTimer';
 import "./Quiz.scss";
+import Result from '../Result/Result';
 
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -13,7 +14,7 @@ const Quiz = ({ questions }) => {
     
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
-    const onAnswerClick = (answer, index) => {
+    const onAnswerClick = (answer, index) => { // checking the answer
         setAnswerIdx(index);
         if (answer === correctAnswer) {
             setIsCorrect(true);
@@ -41,7 +42,7 @@ const Quiz = ({ questions }) => {
             console.log("Quiz finished");
         }
 
-        setTimeout(() => {
+        setTimeout(() => { // assyncronous call will execute after que execution
             setShowAnswerTimer(true);
         
         })
@@ -85,22 +86,7 @@ const Quiz = ({ questions }) => {
                 </div>
             </>
             ) : (
-            <div className="result">
-                <h3>Result</h3>
-                <p>
-                    Total Questions: <span>{questions.length}</span>
-                </p>
-                <p>
-                    Total Score: <span>{results.score}</span>
-                </p>
-                <p>
-                    Total Questions: <span>{results.correctAnswers}</span>
-                </p>
-                <p>
-                    Total Questions: <span>{results.wrongAnswers}</span>
-                </p>
-                <button onClick={onTryAgain}>Try again</button>
-            </div>
+                <Result results={results} onTryAgain={onTryAgain} totalQuestions={questions.length}/>
             )}
 
         </div>

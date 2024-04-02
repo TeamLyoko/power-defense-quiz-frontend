@@ -31,7 +31,7 @@ function AnswerTimer({duration, onTimeUp}){
         <div
             style={{ 
                 width: `${progressLoaded}%`, 
-                backgroundColor: '${progressLoaded < 40 ? "lightgreen" : progressLoaded < 70 ? "orange" : "red"}',
+                backgroundColor: `${progressLoaded < 40 ? "lightgreen" : progressLoaded < 70 ? "orange" : "red"}`,
             }} 
             className="progress">
 
