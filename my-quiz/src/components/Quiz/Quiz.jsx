@@ -3,6 +3,9 @@ import { resultInitialState } from '../../constants';
 import AnswerTimer from '../AnswerTimer/AnswerTimer';
 import "./Quiz.scss";
 import Result from '../Result/Result';
+import Feedback from '../Feedback/Feedback';
+
+const TIMER_DURATION = 10; // Define Time Duration
 
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -11,52 +14,78 @@ const Quiz = ({ questions }) => {
     const [results, setResults] = useState(resultInitialState);
     const [showResults, setShowResults] = useState(false);
     const [showAnswerTimer, setShowAnswerTimer] = useState(true);
+    const [isEvaluated, setIsEvaluated] = useState(false); 
+    const [isAnswered, setIsAnswered] = useState(false); 
+    const [isChangeAble, setIsChangeAble] = useState(true);
     
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
     const onAnswerClick = (answer, index) => { // checking the answer
-        setAnswerIdx(index);
-        if (answer === correctAnswer) {
-            setIsCorrect(true);
-            console.log("Correct");
+        if (isChangeAble){
+            setAnswerIdx(index);
+            setIsAnswered(true);
+            if (answer === correctAnswer) {
+                setIsCorrect(true);
+                console.log("Correct");
+            } else {
+                setIsCorrect(false);
+                console.log("Incorrect");
+            }
         } else {
-            setIsCorrect(false);
-            console.log("Incorrect");
+            setIsAnswered(false);
+
         }
     };
 
-    const onClickNext = (isAnswerRight) => {
-        setAnswerIdx(null);
-        setShowAnswerTimer(false);
-        setResults((prev) => isAnswerRight ?
-            { ...prev, score: prev.score + 5, correctAnswers: prev.correctAnswers + 1 } :
-            { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
-        );
+    const onClickCheck = (isAnswerRight, isQuestionEvaluated) => {
+        setIsChangeAble(false);
 
-        if(currentQuestion !== questions.length - 1) {
-            setCurrentQuestion((prev) => prev + 1);
-            console.log("Next question is {}", currentQuestion + 1);
+        if (isQuestionEvaluated) {
+            setAnswerIdx(null);
+            setShowAnswerTimer(false);
+            setResults((prev) => isAnswerRight ?
+                { ...prev, score: prev.score + 5, correctAnswers: prev.correctAnswers + 1 } :
+                { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
+            );
+    
+            if(currentQuestion !== questions.length - 1) {
+                setCurrentQuestion((prev) => prev + 1);
+                //console.log("Next question is {}", currentQuestion + 1);
+            } else {
+                setCurrentQuestion(0);
+                setShowResults(true);
+                console.log("Quiz finished");
+            }
+            
+            setIsEvaluated(false);
+            setIsAnswered(false);
+
+            setTimeout(() => { // assyncronous call will execute after que execution
+                setShowAnswerTimer(true);
+                setIsChangeAble(true);
+            
+            })
+
         } else {
-            setCurrentQuestion(0);
-            setShowResults(true);
-            console.log("Quiz finished");
-        }
+            setShowAnswerTimer(false);
 
-        setTimeout(() => { // assyncronous call will execute after que execution
-            setShowAnswerTimer(true);
-        
-        })
+            setTimeout(() => {
+                setIsEvaluated(true);
+            })
+        }
     };
 
     const onTryAgain = () => {
         setResults(resultInitialState);
         setShowResults(false);
+        isChangeAble(true);
     };
 
     const handleTimeUp = () => {
         //alert("Time's up!");
         setIsCorrect(false);
-        onClickNext(false);
+        onClickCheck(false, false);
+        isChangeAble(false);
     }
 
     return (
@@ -64,7 +93,7 @@ const Quiz = ({ questions }) => {
             { !showResults ? (
                 <>
                 {showAnswerTimer && (
-                    <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
+                    <AnswerTimer duration={TIMER_DURATION} onTimeUp={handleTimeUp} />
                 )}
                 <span className="active-question-no">{currentQuestion + 1}</span>
                 <span className="total-question">/{questions.length}</span>
@@ -79,9 +108,14 @@ const Quiz = ({ questions }) => {
                         </li>
                     ))}
                 </ul>
+                <div>
+                    <>
+                        {!showAnswerTimer && <Feedback generalFB={generalFeedback} specificFB={specificFeedback} answerIDX={answerIdx} isAnswered={isAnswered}/>}
+                    </>
+                </div>
                 <div className="footer">
-                    <button onClick={() => onClickNext(isCorrect)} disabled={answerIdx === null}>
-                        {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+                    <button onClick={() => onClickCheck(isCorrect, isEvaluated)} disabled={answerIdx === null && showAnswerTimer}>
+                        { isEvaluated ? "Next" : "Check" }
                     </button>
                 </div>
             </>

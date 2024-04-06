@@ -8,8 +8,8 @@ function AnswerTimer({duration, onTimeUp}){
 
     useEffect(() => {
         intervalRef.current = setInterval(() => {
-            setCounter((prev) => prev + 1);
-        }, 1000);
+            setCounter((prev) => prev + 0.1); // incrementing the counter by 0.1 for each 100ms
+        }, 100);
 
         return () => clearInterval(intervalRef.current);
     }, []);
@@ -17,12 +17,12 @@ function AnswerTimer({duration, onTimeUp}){
     useEffect(() => {
         setProgressLoaded((counter / duration) * 100);
 
-        if(counter === duration){
+        if(counter >= duration - 0.1){  // 0.1 is due to counter balance the transition-time
             clearInterval(intervalRef.current);
 
             setTimeout(() => {
                 onTimeUp();
-            }, 1000); 
+            }, 100); 
         }
 
     }, [counter]);
