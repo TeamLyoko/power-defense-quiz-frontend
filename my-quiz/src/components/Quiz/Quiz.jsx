@@ -21,6 +21,8 @@ const Quiz = ({ questions }) => {
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
     const onAnswerClick = (answer, index) => { // checking the answer
+        console.log("Answer is clicked");
+        console.log("Debugging => is Answer correct : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
         if (isChangeAble){
             setAnswerIdx(index);
             setIsAnswered(true);
@@ -32,15 +34,16 @@ const Quiz = ({ questions }) => {
                 console.log("Incorrect");
             }
         } else {
-            setIsAnswered(false);
+            setShowAnswerTimer(false);
 
         }
     };
 
     const onClickCheck = (isAnswerRight, isQuestionEvaluated) => {
         setIsChangeAble(false);
-
-        if (isQuestionEvaluated) {
+        console.log(("Next or Check buttton is clicked"));
+        console.log("Debugging => iscorrect : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
+        if (isQuestionEvaluated) { // Next buttom is clicked
             setAnswerIdx(null);
             setShowAnswerTimer(false);
             setResults((prev) => isAnswerRight ?
@@ -50,7 +53,7 @@ const Quiz = ({ questions }) => {
     
             if(currentQuestion !== questions.length - 1) {
                 setCurrentQuestion((prev) => prev + 1);
-                //console.log("Next question is {}", currentQuestion + 1);
+                console.log("Next question is {}", currentQuestion + 1);
             } else {
                 setCurrentQuestion(0);
                 setShowResults(true);
@@ -63,11 +66,13 @@ const Quiz = ({ questions }) => {
             setTimeout(() => { // assyncronous call will execute after que execution
                 setShowAnswerTimer(true);
                 setIsChangeAble(true);
+                console.log("Answer is changable : ", isChangeAble);
             
             })
 
-        } else {
+        } else { // Check buttom is clicked
             setShowAnswerTimer(false);
+            setIsChangeAble(false);
 
             setTimeout(() => {
                 setIsEvaluated(true);
@@ -79,6 +84,12 @@ const Quiz = ({ questions }) => {
         setResults(resultInitialState);
         setShowResults(false);
         isChangeAble(true);
+        isAnswered(false);
+        isEvaluated(false);
+        setShowAnswerTimer(true);
+        console.log("Try again buttom is clicked");
+        console.log("Debugging => is Answer correct : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
+        
     };
 
     const handleTimeUp = () => {
