@@ -96,7 +96,7 @@ const Quiz = ({ questions }) => {
         //alert("Time's up!");
         setIsCorrect(false);
         onClickCheck(false, false);
-        isChangeAble(false);
+        setIsChangeAble(false);
     }
 
     return (
