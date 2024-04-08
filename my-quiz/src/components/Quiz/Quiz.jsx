@@ -114,7 +114,7 @@ const Quiz = ({ questions }) => {
                         <li 
                             onClick={() => onAnswerClick(answer, index)} 
                             key={answer}
-                            className={answerIdx === index ? 'selected-answer' : null}>
+                            className={answerIdx === index ? ( isEvaluated ? ( isCorrect ? 'correct-answer' : 'incorrect-answer') : 'selected-answer' ) : null}>
                                 {answer}
                         </li>
                     ))}

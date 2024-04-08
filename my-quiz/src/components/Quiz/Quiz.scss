@@ -49,6 +49,18 @@
             border: 1px solid $accent;
             color: $bg;
         }
+
+        .correct-answer{
+            background: $correct;
+            border: 1px solid $correct;
+            color: $bg;
+        }
+
+        .incorrect-answer{
+            background: $incorrect;
+            border: 1px solid $incorrect;
+            color: $bg;
+        }
     }
 
     .footer{
