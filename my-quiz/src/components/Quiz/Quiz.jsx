@@ -94,9 +94,20 @@ const Quiz = ({ questions }) => {
 
     const handleTimeUp = () => {
         //alert("Time's up!");
-        setIsCorrect(false);
-        onClickCheck(false, false);
-        setIsChangeAble(false);
+
+        if (isAnswered) {
+            setIsChangeAble(false);
+            setIsEvaluated(false);
+            setIsChangeAble(false);
+            onClickCheck(isCorrect, isEvaluated);
+
+        } else{
+        
+            setIsCorrect(false);
+            onClickCheck(false, false);
+            setIsChangeAble(false);
+        }
+
     }
 
     return (
