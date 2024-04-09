@@ -103,8 +103,8 @@ const Quiz = ({ questions }) => {
 
         } else{
         
-            setIsCorrect(false);
-            onClickCheck(false, false);
+        setIsCorrect(false);
+        onClickCheck(false, false);
             setIsChangeAble(false);
         }
 
