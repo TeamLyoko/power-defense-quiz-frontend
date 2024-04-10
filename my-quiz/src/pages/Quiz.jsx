@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { resultInitialState } from '../../constants';
-import AnswerTimer from '../AnswerTimer/AnswerTimer';
-import "./Quiz.scss";
-import Result from '../Result/Result';
-import Feedback from '../Feedback/Feedback';
+import { resultInitialState } from '../constants';
+import AnswerTimer from '../components/AnswerTimer/AnswerTimer';
+import "../styles/Quiz.scss";
+import Result from '../components/Result/Result';
+import Feedback from '../components/Feedback/Feedback'; 
 
 const TIMER_DURATION = 10; // Define Time Duration
 
