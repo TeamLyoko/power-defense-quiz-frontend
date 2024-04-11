@@ -4,13 +4,16 @@
 .home-header{
     //text-align: center;
     margin-top: 10vh;
+    
 
-    .h1{
-        font-size: 32px; 
+    h1{
+        font-size: 64px; 
+        display: flex;
         font-family: 'Arial', sans-serif;
         color: #340481;
-        font-weight: 500;
-        text-align: left;
+        font-weight: 1000;
+        text-align: center;
         display: inline-block;
+        width: 100vw;
     }
 }

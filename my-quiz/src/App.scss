@@ -1,0 +1,18 @@
+@import "./styles/vars.scss";
+
+.main-app {
+    font-family: monospace;
+    // background-image: url(./images/animatedplant4.jpg);
+    // background-position: center;
+    // background-size: cover;
+    // background-color: rgba(255, 255, 255, 0.5);
+    // background-blend-mode: lighten;
+    color: $foreground;
+    // display: flex;
+    justify-content: center;
+    //align-items: center;
+    margin: 0 auto;
+    padding: 0 0px;
+    height: 100vh;
+    opacity: 1.0; // opacity of body
+}

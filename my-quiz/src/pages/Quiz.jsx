@@ -111,40 +111,42 @@ const Quiz = ({ questions }) => {
     }
 
     return (
-        <div className="quiz-container">
-            { !showResults ? (
-                <>
-                {showAnswerTimer && (
-                    <AnswerTimer duration={TIMER_DURATION} onTimeUp={handleTimeUp} />
-                )}
-                <span className="active-question-no">{currentQuestion + 1}</span>
-                <span className="total-question">/{questions.length}</span>
-                <h2>{question}</h2>
-                <ul>
-                    {choices.map((answer, index) => (
-                        <li 
-                            onClick={() => onAnswerClick(answer, index)} 
-                            key={answer}
-                            className={answerIdx === index ? ( isEvaluated ? ( isCorrect ? 'correct-answer' : 'incorrect-answer') : 'selected-answer' ) : null}>
-                                {answer}
-                        </li>
-                    ))}
-                </ul>
-                <div>
+        <div className='question-box'>
+            <div className="quiz-container">
+                { !showResults ? (
                     <>
-                        {!showAnswerTimer && <Feedback generalFB={generalFeedback} specificFB={specificFeedback} answerIDX={answerIdx} isAnswered={isAnswered}/>}
-                    </>
-                </div>
-                <div className="footer">
-                    <button onClick={() => onClickCheck(isCorrect, isEvaluated)} disabled={answerIdx === null && showAnswerTimer}>
-                        { isEvaluated ? "Next" : "Check" }
-                    </button>
-                </div>
-            </>
-            ) : (
-                <Result results={results} onTryAgain={onTryAgain} totalQuestions={questions.length}/>
-            )}
+                    {showAnswerTimer && (
+                        <AnswerTimer duration={TIMER_DURATION} onTimeUp={handleTimeUp} />
+                    )}
+                    <span className="active-question-no">{currentQuestion + 1}</span>
+                    <span className="total-question">/{questions.length}</span>
+                    <h2>{question}</h2>
+                    <ul>
+                        {choices.map((answer, index) => (
+                            <li 
+                                onClick={() => onAnswerClick(answer, index)} 
+                                key={answer}
+                                className={answerIdx === index ? ( isEvaluated ? ( isCorrect ? 'correct-answer' : 'incorrect-answer') : 'selected-answer' ) : null}>
+                                    {answer}
+                            </li>
+                        ))}
+                    </ul>
+                    <div>
+                        <>
+                            {!showAnswerTimer && <Feedback generalFB={generalFeedback} specificFB={specificFeedback} answerIDX={answerIdx} isAnswered={isAnswered}/>}
+                        </>
+                    </div>
+                    <div className="footer">
+                        <button onClick={() => onClickCheck(isCorrect, isEvaluated)} disabled={answerIdx === null && showAnswerTimer}>
+                            { isEvaluated ? ( (currentQuestion + 1) === questions.length ? "Results" : "Next" ) : "Check" }
+                        </button>
+                    </div>
+                </>
+                ) : (
+                    <Result results={results} onTryAgain={onTryAgain} totalQuestions={questions.length}/>
+                )}
 
+            </div>
         </div>
     );
 };

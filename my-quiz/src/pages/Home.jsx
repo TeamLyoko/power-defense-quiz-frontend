@@ -3,7 +3,10 @@ import "../styles/Home.scss";
 const Home = () => {
   return (
     <div className="home-header">
-      <h1>Power Quiz</h1>
+      //add an image
+      {/* <img className="logo-img" src="./../images/logo-removebg.png" alt="logo-image" />
+      {!imageUrl && <p>No image available</p>} */}
+      <h1>QUIZ</h1>
     </div>
   );
 };

@@ -3,10 +3,11 @@ import Quiz from "./pages/Quiz";
 import Home from "./pages/Home";
 import { jsQuizz } from "./constants";
 import { BrowserRouter as Router,Route, Routes} from "react-router-dom";
+import "./App.scss";
 
 function App() {
   return (
-  <div>
+  <div className="main-app">
     <Router>
       <Routes>
         <Route exact path="/" element={<Home />} />
