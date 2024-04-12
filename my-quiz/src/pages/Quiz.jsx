@@ -4,8 +4,12 @@ import AnswerTimer from '../components/AnswerTimer/AnswerTimer';
 import "../styles/Quiz.scss";
 import Result from '../components/Result/Result';
 import Feedback from '../components/Feedback/Feedback'; 
+import CustomButton from '../components/CustomButton/CustomButton';
+import { TIMER_DURATION, COIN_INCREMENT } from '../variables';
 
-const TIMER_DURATION = 10; // Define Time Duration
+
+
+//const COIN_INCREMENT = 5; // Define Coin Increment
 
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -47,7 +51,7 @@ const Quiz = ({ questions }) => {
             setAnswerIdx(null);
             setShowAnswerTimer(false);
             setResults((prev) => isAnswerRight ?
-                { ...prev, score: prev.score + 5, correctAnswers: prev.correctAnswers + 1 } :
+                { ...prev, coins: prev.coins + COIN_INCREMENT, correctAnswers: prev.correctAnswers + 1 } :
                 { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
             );
     
@@ -137,9 +141,13 @@ const Quiz = ({ questions }) => {
                         </>
                     </div>
                     <div className="footer">
-                        <button onClick={() => onClickCheck(isCorrect, isEvaluated)} disabled={answerIdx === null && showAnswerTimer}>
-                            { isEvaluated ? ( (currentQuestion + 1) === questions.length ? "Results" : "Next" ) : "Check" }
-                        </button>
+                        
+                        <CustomButton 
+                            onClick={() => onClickCheck(isCorrect, isEvaluated)} 
+                            disabled={answerIdx === null && showAnswerTimer} 
+                            label={ isEvaluated ? ( (currentQuestion + 1) === questions.length ? "Results" : "Next" ) : "Check" } 
+                        />
+
                     </div>
                 </>
                 ) : (

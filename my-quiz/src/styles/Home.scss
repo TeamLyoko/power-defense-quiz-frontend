@@ -1,19 +1,83 @@
 @import "./vars.scss";
 
 
-.home-header{
+.home{
     //text-align: center;
-    margin-top: 10vh;
-    
 
-    h1{
-        font-size: 64px; 
-        display: flex;
-        font-family: 'Arial', sans-serif;
-        color: #340481;
-        font-weight: 1000;
-        text-align: center;
-        display: inline-block;
+    // centering the logo
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+
+    .home-center{
+        margin-top: 10vh;
         width: 100vw;
+        // centering the logo
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+
+        .guide-box{
+
+            justify-content: center;
+            width: 60vw;
+            background: $bg;
+            opacity: 1.0;
+            border-radius: 3vh;
+            //margin-top: 100px;
+            padding: 30px 60px;
+            box-sizing: border-box;
+            position: relative;
+            border: 2px solid black;
+
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+    
+            h2{
+                font-size: 5vh;
+                font-weight: bold;
+                margin: 0;
+                color: $primary;
+                
+            }
+    
+            .home-para-container{
+                p{
+                    font-size: 2vh;
+                    color: black;
+                }
+            }
+        }
+    
+        .logo-img{
+            width: 50vw;
+            display: block;
+        }
+        
+    
+        h1{
+            font-size: 10vh; 
+            display: flex;
+            font-family: 'Arial', sans-serif;
+            color: #340481;
+            font-weight: 1000;
+            text-align: center;
+            margin: 0px;
+            display: inline-block;
+            width: 100vw;
+        }
+    }
+
+    .home-footer{
+        margin-top: 3vh;
+        width: 60vw;
+        height: 15vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
     }
 }

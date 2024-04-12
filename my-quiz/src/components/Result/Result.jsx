@@ -9,7 +9,7 @@ const Result = ({totalQuestions, results, onTryAgain}) => {
                 Total Questions: <span>{totalQuestions}</span>
             </p>
             <p>
-                Total Score: <span>{results.score}</span>
+                Total Coins: <span>{results.coins}</span>
             </p>
             <p>
                 Correct Questions: <span>{results.correctAnswers}</span>

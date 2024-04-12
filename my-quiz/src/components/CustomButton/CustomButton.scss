@@ -1,0 +1,25 @@
+@import "./../../styles/";
+
+.custom-button{
+    background: linear-gradient(0deg, $button-top, 50%, $button-bottom);       
+    border-color: $accent;
+    font-size: 18px;
+    font-weight: 400;
+    color: $primary;
+    padding: 10px 42px;
+    outline: none;
+    border-radius: 20px;
+    //margin-top: 15px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+
+    &:disabled{
+        background: $bg-accent;
+        color: $disabled;
+        cursor: not-allowed;
+        border-color: black;
+    }
+}
