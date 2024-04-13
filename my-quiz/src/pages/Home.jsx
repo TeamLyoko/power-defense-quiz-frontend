@@ -14,9 +14,9 @@ const Home = () => {
   useEffect(() => {
     // Play background music when component mounts
     bgMusic.loop = true;
-    console.log("Volume level:", bgMusic.volume); 
+    console.log("Intro music Volume level:", bgMusic.volume); 
     bgMusic.play();
-    console.log("Is music playing?", !bgMusic.paused);
+    console.log("Is Intro music playing?", !bgMusic.paused);
     bgMusic.volume = 0.15;
     return () => bgMusic.pause(); // Pause music when component unmounts
   }, []); // Run effect only once on component mount
@@ -25,8 +25,7 @@ const Home = () => {
     // isGuideOn ? setIsGuideOn(false) : setIsGuideOn(true);
     setIsGuideOn(!isGuideOn);
     playClick();
-    console.log("Help button is clicked");
-    console.log({isGuideOn});
+    console.log("Help button is clicked, is help on?", !isGuideOn);
   }
 
   function playClick () {
@@ -69,7 +68,7 @@ const Home = () => {
         <Link to="/Quiz" style={{textDecoration: "none"}}>
           <CustomButton width="10vw" height="8vh" fontSize="4vh" fontWeight="bold"
             label="Start" 
-            onClick={playClick()}
+            onClick={playClick}
             disabled={isGuideOn}
           />
         </Link>

@@ -6,6 +6,10 @@ import Result from '../components/Result/Result';
 import Feedback from '../components/Feedback/Feedback'; 
 import CustomButton from '../components/CustomButton/CustomButton';
 import { TIMER_DURATION, COIN_INCREMENT } from '../variables';
+import soundClick from "../assets/music/click.wav";
+import soundCorrect from "../assets/music/correctclick1.wav";
+import soundWrong from "../assets/music/wronganswer1.wav";
+
 
 
 
@@ -24,8 +28,24 @@ const Quiz = ({ questions }) => {
     
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
+    function playClick () {
+        const audio = new Audio(soundClick);
+        audio.play();
+    }
+
+    function playCorrect () {
+        const audioc = new Audio(soundCorrect);
+        audioc.play();
+    }
+
+    function playWrong () {
+        const audiow = new Audio(soundWrong);
+        audiow.play();
+    }
+
     const onAnswerClick = (answer, index) => { // checking the answer
         console.log("Answer is clicked");
+        playClick();
         console.log("Debugging => is Answer correct : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
         if (isChangeAble){
             setAnswerIdx(index);
@@ -48,6 +68,7 @@ const Quiz = ({ questions }) => {
         console.log(("Next or Check buttton is clicked"));
         console.log("Debugging => iscorrect : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
         if (isQuestionEvaluated) { // Next buttom is clicked
+            playClick();
             setAnswerIdx(null);
             setShowAnswerTimer(false);
             setResults((prev) => isAnswerRight ?
@@ -75,6 +96,12 @@ const Quiz = ({ questions }) => {
             })
 
         } else { // Check buttom is clicked
+            if (isCorrect){
+                playCorrect();
+            } else {
+                playWrong();
+            }
+
             setShowAnswerTimer(false);
             setIsChangeAble(false);
 
@@ -85,6 +112,7 @@ const Quiz = ({ questions }) => {
     };
 
     const onTryAgain = () => {
+        playClick();
         setResults(resultInitialState);
         setShowResults(false);
         isChangeAble(true);
@@ -104,11 +132,16 @@ const Quiz = ({ questions }) => {
             setIsEvaluated(false);
             setIsChangeAble(false);
             onClickCheck(isCorrect, isEvaluated);
+            if (isCorrect){
+                playCorrect();
+            } else {
+                playWrong();
+            }
 
         } else{
-        
-        setIsCorrect(false);
-        onClickCheck(false, false);
+            playWrong();
+            setIsCorrect(false);
+            onClickCheck(false, false);
             setIsChangeAble(false);
         }
 
