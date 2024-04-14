@@ -194,12 +194,4 @@ export const jsQuizz = {
     ]
 
 
-
-
 }
-
-export const resultInitialState = {
-    coins: 0,
-    correctAnswers: 0,
-    wrongAnswers: 0,
-};

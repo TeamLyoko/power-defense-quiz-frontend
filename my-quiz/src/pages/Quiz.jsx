@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { resultInitialState } from '../constants';
+import { resultInitialState } from '../variables';
 import AnswerTimer from '../components/AnswerTimer/AnswerTimer';
 import "../styles/Quiz.scss";
 import Result from '../components/Result/Result';

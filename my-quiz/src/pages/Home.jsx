@@ -9,6 +9,7 @@ import soundClick from "../assets/music/click.wav";
 
 const Home = () => {
   const [isGuideOn, setIsGuideOn] = useState(false);
+  const [isAttempted, setIsAttempted] = useState(false);
   const [bgMusic] = useState(new Audio(soundIntro));
 
   useEffect(() => {
@@ -26,6 +27,12 @@ const Home = () => {
     setIsGuideOn(!isGuideOn);
     playClick();
     console.log("Help button is clicked, is help on?", !isGuideOn);
+  }
+
+  const handleStartClick = () => {
+    setIsAttempted(true);
+    playClick();
+    console.log("Start button is clicked, is attempted?", isAttempted);
   }
 
   function playClick () {
@@ -68,8 +75,8 @@ const Home = () => {
         <Link to="/Quiz" style={{textDecoration: "none"}}>
           <CustomButton width="10vw" height="8vh" fontSize="4vh" fontWeight="bold"
             label="Start" 
-            onClick={playClick}
-            disabled={isGuideOn}
+            onClick={handleStartClick}
+            disabled={isAttempted}
           />
         </Link>
       </footer>
