@@ -13,7 +13,7 @@ Make sure to run the Back-End before running the Front-End
 * Clone the repository. 
 * Go to the folder my-quiz by command "cd my-quiz" in Terminal.
 * Open with VS code and then run the command "npm run dev" in a new terminal. 
-* Click the link and open the quiz in Chrome browser.
+* Click the link in the terminal and open the quiz in Chrome browser.
 
 ## How to create build files
 * Run the command "npm run build".
