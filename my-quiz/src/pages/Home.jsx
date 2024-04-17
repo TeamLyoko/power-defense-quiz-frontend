@@ -1,17 +1,17 @@
 import "../styles/Home.scss";
-import { useState, useEffect } from "react";
 import CustomButton from '../components/CustomButton/CustomButton';
 import logoImg from "../images/logo-removebg.png";
+
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-//import { COIN_INCREMENT, TIMER_DURATION } from "../variables";
 import VARIABLES from "../variables";
-
 import soundIntro from "../assets/music/intro.wav";
 import soundClick from "../assets/music/click.wav";
 
 const Home = () => {
+  // Obtaining the username and token from the URL
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const userName = searchParams.get("userName");
@@ -19,6 +19,7 @@ const Home = () => {
   console.log("User name:", userName);
   //console.log("Token:", token);
 
+  // Defining the state variables
   const [isGuideOn, setIsGuideOn] = useState(false);
   const [isAttempted, setIsAttempted] = useState(false);
   const [bgMusic] = useState(new Audio(soundIntro));
@@ -34,19 +35,21 @@ const Home = () => {
   }, []); // Run effect only once on component mount
 
   const handleHelpClick = () => {
-    // isGuideOn ? setIsGuideOn(false) : setIsGuideOn(true);
+    // Function to handle the help button click
     setIsGuideOn(!isGuideOn);
     playClick();
     console.log("Help button is clicked, is help on?", !isGuideOn);
   }
 
   const handleStartClick = () => {
+    // Function to handle the start button click
     setIsAttempted(true);
     playClick();
     console.log("Start button is clicked, is attempted?", isAttempted);
   }
 
   function playClick () {
+    // Function to play the click sound
     const audio = new Audio(soundClick);
     audio.play();
   }
