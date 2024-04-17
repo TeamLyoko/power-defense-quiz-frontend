@@ -9,3 +9,4 @@ Group Members:
 - M. N. Gunawardena - 200201V
 
 This repo contains the front-end of the quiz application.
+[Navigate to the ReadMe file of my-quiz folder](https://github.com/TeamLyoko/power-defense-quiz-frontend/tree/master/my-quiz#readme)
