@@ -1,6 +1,6 @@
 # How to Start
 Make sure to run the Back-End before running the Front-End
-[GitHub link to backend] (https://github.com/TeamLyoko/power-defense-quiz-backend/tree/dev/security)
+[GitHub link to backend](https://github.com/TeamLyoko/power-defense-quiz-backend/tree/dev/security)
 
 ## How to setup the Google Chrome browser before running the Front-End
 Go to settings.
