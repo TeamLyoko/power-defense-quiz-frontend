@@ -14,29 +14,37 @@ const Loading = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const userName = searchParams.get("userName");
+    const password = searchParams.get("password");
     const [quisDownloaded, setQuisDownloaded] = useState(false);
     const [questionListData, setQuestionListData] = useState([]);
+    const datatosend = {
+        username: userName,
+        password: password
+    };
 
     useEffect(() => {
         
         async function fetchData() {
             try {
-                const response = await axios.get(VARIABLES.ELIGIBILITY_REST_API_URL, {
-                    params: {
-                        username: userName
-                    }
-                });
-                console.log("Response:",response.data);
+                console.log("Data to send:", datatosend);
+                const response = await axios.post(VARIABLES.ELIGIBILITY_WITH_SEC_REST_API_URL, datatosend);
+                console.log("Response:",response);
                 const data = response.data;
                 console.log("Data:",data);
-                const {completed} = data;
+                console.log("Data JWT:",data.jwt);
+                const token = data.jwt;
+                console.log("Token:",token);
+                const completed = false; // Completion is checked in the Game
+
+                
                 console.log("Completed:",completed);
+
 
                 // when ever the quisDownloaded is set to true, the page will be redirected to the Home page
                 if (!completed) {
 
                     console.log("Moving to Home page");
-                    window.location.href = `/Home?userName=${encodeURIComponent(userName)}`;
+                    window.location.href = `/Home?userName=${encodeURIComponent(userName)}&token=${encodeURIComponent(token)}`;
                 } else {
                     console.log("User has already done the quiz");
                     alert("You have already done the quiz. You can't do it again.");

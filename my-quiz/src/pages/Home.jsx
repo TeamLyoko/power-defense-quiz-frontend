@@ -15,7 +15,9 @@ const Home = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const userName = searchParams.get("userName");
+  const token = searchParams.get("token");
   console.log("User name:", userName);
+  //console.log("Token:", token);
 
   const [isGuideOn, setIsGuideOn] = useState(false);
   const [isAttempted, setIsAttempted] = useState(false);
@@ -81,7 +83,7 @@ const Home = () => {
           onClick={handleHelpClick} 
           label={isGuideOn ? "Back" : "Help"}  
         />
-        <Link to={`/Quiz?userName=${encodeURIComponent(userName)}`} style={{textDecoration: "none"}}>
+        <Link to={`/Quiz?userName=${encodeURIComponent(userName)}&token=${encodeURIComponent(token)}`} style={{textDecoration: "none"}}>
           <CustomButton width="10vw" height="8vh" fontSize="4vh" fontWeight="bold"
             label="Start" 
             onClick={handleStartClick}

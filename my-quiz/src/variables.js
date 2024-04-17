@@ -9,7 +9,9 @@ const VARIABLES = {
     // BackEnd parameters
     QUESTIONS_REST_API_URL : 'https://dummy.restapiexample.com/quiz/questionsWithFeedback', // Define Questions REST API URL
     ELIGIBILITY_REST_API_URL : 'http://localhost:8080/quiz/completed', // Define Eligibility REST API URL
+    ELIGIBILITY_WITH_SEC_REST_API_URL : 'http://localhost:8080/quiz/authenticate', // Define Eligibility REST API URL
     RESULT_REST_API_URL : 'http://localhost:8080/quiz/marks/submit', // Define Result REST API URL
+
 }
 
 

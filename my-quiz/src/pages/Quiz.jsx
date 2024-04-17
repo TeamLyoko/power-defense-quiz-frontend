@@ -6,6 +6,7 @@ import Result from '../components/Result/Result';
 import Feedback from '../components/Feedback/Feedback'; 
 import CustomButton from '../components/CustomButton/CustomButton';
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 //import { TIMER_DURATION, COIN_INCREMENT } from '../variables';
 import VARIABLES from "../variables";
@@ -26,6 +27,7 @@ const Quiz = ({ questions }) => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const userName = searchParams.get("userName");
+    const token = searchParams.get("token");
 
     const [questionsL, setQuestionsL] = useState([]);
     const [loaded, setLoaded] = useState(false);
@@ -106,27 +108,28 @@ const Quiz = ({ questions }) => {
     useEffect(() => {
         if (showResults) {
 
-            const data = {
+            const postdata = {
                 username: userName,
                 score: parseInt(results.coins)
             };
-            console.log("Data:",data);
-            console.log("Body:",JSON.stringify(data));
+            console.log("Data:",postdata);
+            console.log("Body:",JSON.stringify(postdata));
             console.log("Results:",results);
-            fetch(VARIABLES.RESULT_REST_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+
+            const headers = {
+                'Content-Type': 'application/json',
+                'accept': '*/*',
+                'Authorization': 'Bearer ' + token  
+            };
+
+            axios.post(VARIABLES.RESULT_REST_API_URL, postdata, {headers})
+                .then(response => {
+                    console.log('Response:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            
         }
     }, [showResults]);
 
