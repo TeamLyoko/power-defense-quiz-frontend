@@ -1,6 +1,6 @@
 const VARIABLES = {
     // FrontEnd parameters
-    TIMER_DURATION : 10, // Define Time Duration
+    TIMER_DURATION : 150, // Define Time Duration
     COIN_INCREMENT : 50, // Define Coin Increment
     BEGIN_VOLUME_LEVEL : 0.7, // Define Begin Volume Level
     END_VOLUME_LEVEL : 0.1, // Define End Volume Level
