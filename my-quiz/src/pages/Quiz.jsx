@@ -1,21 +1,57 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { resultInitialState } from '../variables';
 import AnswerTimer from '../components/AnswerTimer/AnswerTimer';
 import "../styles/Quiz.scss";
 import Result from '../components/Result/Result';
 import Feedback from '../components/Feedback/Feedback'; 
 import CustomButton from '../components/CustomButton/CustomButton';
-import { TIMER_DURATION, COIN_INCREMENT } from '../variables';
+import { useLocation } from "react-router-dom";
+
+//import { TIMER_DURATION, COIN_INCREMENT } from '../variables';
+import VARIABLES from "../variables";
+
 import soundClick from "../assets/music/click.wav";
 import soundCorrect from "../assets/music/correctclick1.wav";
 import soundWrong from "../assets/music/wronganswer1.wav";
+//import RESULT_REST_API_URL from '../variables';
 
 
 
 
-//const COIN_INCREMENT = 5; // Define Coin Increment
+//const VARIABLES.COIN_INCREMENT = 5; // Define Coin Increment
 
 const Quiz = ({ questions }) => {
+//const Quiz = () => {
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const userName = searchParams.get("userName");
+
+    const [questionsL, setQuestionsL] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const response = await fetch(QUESTIONS_REST_API_URL);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = response.data;
+            
+            console.log("response:",response);
+            setQuestionsL(data.questions);
+            console.log("Questions:",questionsL);
+            setLoaded(true);
+            
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        fetchData();
+    }, []);
+
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answerIdx, setAnswerIdx] = useState(null);
     const [isCorrect, setIsCorrect] = useState(null);
@@ -26,6 +62,10 @@ const Quiz = ({ questions }) => {
     const [isAnswered, setIsAnswered] = useState(false); 
     const [isChangeAble, setIsChangeAble] = useState(true);
     
+    // if (!loaded) {
+    //     return <div>Loading...</div>;
+    // }
+    console.log("Questions:",questions);
     const { question, choices, correctAnswer, generalFeedback, specificFeedback} = questions[currentQuestion];
 
     function playClick () {
@@ -63,6 +103,33 @@ const Quiz = ({ questions }) => {
         }
     };
 
+    useEffect(() => {
+        if (showResults) {
+
+            const data = {
+                username: userName,
+                score: parseInt(results.coins)
+            };
+            console.log("Data:",data);
+            console.log("Body:",JSON.stringify(data));
+            console.log("Results:",results);
+            fetch(VARIABLES.RESULT_REST_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }, [showResults]);
+
     const onClickCheck = (isAnswerRight, isQuestionEvaluated) => {
         setIsChangeAble(false);
         console.log(("Next or Check buttton is clicked"));
@@ -72,7 +139,7 @@ const Quiz = ({ questions }) => {
             setAnswerIdx(null);
             setShowAnswerTimer(false);
             setResults((prev) => isAnswerRight ?
-                { ...prev, coins: prev.coins + COIN_INCREMENT, correctAnswers: prev.correctAnswers + 1 } :
+                { ...prev, coins: prev.coins + VARIABLES.COIN_INCREMENT, correctAnswers: prev.correctAnswers + 1 } :
                 { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
             );
     
@@ -111,16 +178,12 @@ const Quiz = ({ questions }) => {
         }
     };
 
-    const onTryAgain = () => {
+    const OnBacktoGame = () => {
         playClick();
-        setResults(resultInitialState);
-        setShowResults(false);
-        isChangeAble(true);
-        isAnswered(false);
-        isEvaluated(false);
-        setShowAnswerTimer(true);
-        console.log("Try again buttom is clicked");
-        console.log("Debugging => is Answer correct : ", isCorrect, ", showResults : ", showResults, ", showAnswerTimer : ", showAnswerTimer, ", isEvaluated : ", isEvaluated, ", isAnswered : ", isAnswered, ", isChangeAble : ", isChangeAble);
+        // Close the current window
+        window.close();
+        console.log("Back to game buttom is clicked");
+        alert("Quiz is completed. Close the browser and proceed to Game.");
         
     };
 
@@ -153,7 +216,7 @@ const Quiz = ({ questions }) => {
                 { !showResults ? (
                     <>
                     {showAnswerTimer && (
-                        <AnswerTimer duration={TIMER_DURATION} onTimeUp={handleTimeUp} />
+                        <AnswerTimer duration={VARIABLES.TIMER_DURATION} onTimeUp={handleTimeUp} />
                     )}
                     <span className="active-question-no">{currentQuestion + 1}</span>
                     <span className="total-question">/{questions.length}</span>
@@ -184,7 +247,7 @@ const Quiz = ({ questions }) => {
                     </div>
                 </>
                 ) : (
-                    <Result results={results} onTryAgain={onTryAgain} totalQuestions={questions.length}/>
+                    <Result results={results} OnBacktoGame={OnBacktoGame} totalQuestions={questions.length}/>
                 )}
 
             </div>

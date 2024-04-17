@@ -1,7 +1,8 @@
 import "./AnswerTimer.scss";
 import { useEffect, useState, useRef } from "react";
 import soundTimer from "../../assets/music/quis1.mp3";
-import {BEGIN_VOLUME_LEVEL, END_VOLUME_LEVEL, MUSIC_FADE_OUT_DURATION} from "../../variables";
+//import {BEGIN_VOLUME_LEVEL, END_VOLUME_LEVEL, MUSIC_FADE_OUT_DURATION} from "../../variables";
+import VARIABLES from "../../variables";
 
 
 
@@ -23,8 +24,8 @@ function AnswerTimer({duration, onTimeUp}){
     useEffect(() => {
         setProgressLoaded((counter / duration) * 100);
 
-        const volumeDecreaseRate = (BEGIN_VOLUME_LEVEL - END_VOLUME_LEVEL ) * 0.1 / MUSIC_FADE_OUT_DURATION;
-        const fadeOutStart = duration - MUSIC_FADE_OUT_DURATION;
+        const volumeDecreaseRate = (VARIABLES.BEGIN_VOLUME_LEVEL - VARIABLES.END_VOLUME_LEVEL ) * 0.1 / VARIABLES.MUSIC_FADE_OUT_DURATION;
+        const fadeOutStart = duration - VARIABLES.MUSIC_FADE_OUT_DURATION;
 
         if (counter >= fadeOutStart) {
             // Gradually decrease the volume towards the end
@@ -43,7 +44,7 @@ function AnswerTimer({duration, onTimeUp}){
     }, [counter]); // Run effect only when counter changes
 
     useEffect(() => {
-        audioRef.current.volume = BEGIN_VOLUME_LEVEL;
+        audioRef.current.volume = VARIABLES.BEGIN_VOLUME_LEVEL;
         console.log("Begin Volume level:", audioRef.current.volume);
         
         return () => {

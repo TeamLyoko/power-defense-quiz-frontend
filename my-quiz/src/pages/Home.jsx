@@ -3,11 +3,20 @@ import { useState, useEffect } from "react";
 import CustomButton from '../components/CustomButton/CustomButton';
 import logoImg from "../images/logo-removebg.png";
 import { Link } from "react-router-dom";
-import { COIN_INCREMENT, TIMER_DURATION } from "../variables";
+import { useLocation } from "react-router-dom";
+
+//import { COIN_INCREMENT, TIMER_DURATION } from "../variables";
+import VARIABLES from "../variables";
+
 import soundIntro from "../assets/music/intro.wav";
 import soundClick from "../assets/music/click.wav";
 
 const Home = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const userName = searchParams.get("userName");
+  console.log("User name:", userName);
+
   const [isGuideOn, setIsGuideOn] = useState(false);
   const [isAttempted, setIsAttempted] = useState(false);
   const [bgMusic] = useState(new Audio(soundIntro));
@@ -55,8 +64,8 @@ const Home = () => {
                 <p>5. Click on the "Start" button to start the quiz.</p>
                 <p>7. Click on the "Help" button to see the instructions again.</p>
                 <p>8. Once you start answering you can't go back.</p>
-                <p>9. There are 10 MCQ questions, each correct answer will get {COIN_INCREMENT} coins.</p>
-                <p>10. You have to answer for each question with in {TIMER_DURATION} seconds.</p>
+                <p>9. There are 10 MCQ questions, each correct answer will get {VARIABLES.COIN_INCREMENT} coins.</p>
+                <p>10. You have to answer for each question with in {VARIABLES.TIMER_DURATION} seconds.</p>
               </div>
             </div>
           </>
@@ -72,7 +81,7 @@ const Home = () => {
           onClick={handleHelpClick} 
           label={isGuideOn ? "Back" : "Help"}  
         />
-        <Link to="/Quiz" style={{textDecoration: "none"}}>
+        <Link to={`/Quiz?userName=${encodeURIComponent(userName)}`} style={{textDecoration: "none"}}>
           <CustomButton width="10vw" height="8vh" fontSize="4vh" fontWeight="bold"
             label="Start" 
             onClick={handleStartClick}

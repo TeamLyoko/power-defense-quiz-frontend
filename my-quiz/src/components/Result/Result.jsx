@@ -1,6 +1,6 @@
 import './Result.scss';
 
-const Result = ({totalQuestions, results, onTryAgain}) => {
+const Result = ({totalQuestions, results, OnBacktoGame}) => {
 
     return(
         <div className="result">
@@ -17,7 +17,7 @@ const Result = ({totalQuestions, results, onTryAgain}) => {
             <p>
                 Incorrect Questions: <span>{results.wrongAnswers}</span>
             </p>
-            <button onClick={onTryAgain}>Try again</button>
+            <button onClick={OnBacktoGame}>Back to Game</button>
         </div>
     );
 }
